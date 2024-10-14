@@ -4,3 +4,6 @@
 4.然后进行git commit -m "这里填写注释"
 5.然后进行git push -u origin master   (后面的origin master 应该是分支名)
 然后就行了
+
+
+注释：git add .是会对文件夹里的文件进行全面匹配，会进行删除的

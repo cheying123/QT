@@ -1,6 +1,6 @@
 1.先对文件改名
 2.然后git add <文件名>
 3.检查一下(git status)
-4.然后进行git commit -a "这里填写注释"
+4.然后进行git commit -m "这里填写注释"
 5.然后进行git push -u origin master   (后面的origin master 应该是分支名)
 然后就行了

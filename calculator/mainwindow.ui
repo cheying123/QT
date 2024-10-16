@@ -7,11 +7,26 @@
     <x>0</x>
     <y>0</y>
     <width>403</width>
-    <height>304</height>
+    <height>323</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>MainWindow</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">QPushButton{
+    font-size:16pt;
+}
+QPushButton::hover{
+    background-color:green;
+}
+QPushButton::pressed{
+    background-color:red;
+}
+QLineEdit{
+    font-size:24pt;
+}
+</string>
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QGridLayout" name="gridLayout_2">
@@ -190,7 +205,7 @@
        </widget>
       </item>
       <item row="1" column="1">
-       <widget class="QPushButton" name="btnClearAll">
+       <widget class="QPushButton" name="btnClearError">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
           <horstretch>0</horstretch>
@@ -306,7 +321,7 @@
         </property>
         <property name="font">
          <font>
-          <pointsize>16</pointsize>
+          <pointsize>24</pointsize>
          </font>
         </property>
         <property name="alignment">

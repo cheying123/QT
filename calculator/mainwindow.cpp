@@ -34,9 +34,9 @@ QString MainWindow::calculation(){                          //计算处理
     double result = NULL;
     QString Error = "除数不能为0";
 
-    double operand1 = operands.front().toDouble();
+    double operand1 = operands.front().toDouble();          //第一个数
     operands.pop_front();
-    double operand2 = operands.front().toDouble();
+    double operand2 = operands.front().toDouble();          //第二个数
     operands.pop_front();
 
     QString code = opcode;
@@ -56,7 +56,9 @@ QString MainWindow::calculation(){                          //计算处理
             result = operand1 / operand2;
         }
     }
+    QString message = QString("%1 %2 %3 = %4").arg(operand1).arg(code).arg(operand2).arg(result);
 
+    ui->statusbar->showMessage(message);
 
     return QString::number(result);
 }
@@ -73,7 +75,10 @@ void MainWindow::on_btnEqual_clicked()                      // "="的处理
     if(operands.size() == 2 && opcode != ""){
         result = calculation();                         //结果输出
 
-        operands.push_back(result);                     //将结果放入
+        //operands.push_back(result);                     //将结果放入
+        if( result != "除数不能为0" ){
+            operand = result;
+        }
         ui->display->setText(result);
     }
 
@@ -93,7 +98,11 @@ void MainWindow::binaryOperatorClicked(){                   // 加减乘除 操�
         if(operands.size() == 2 && opcode != ""){
             result = calculation();                         //结果输出
 
-            operands.push_back(result);                     //将结果放入
+            //operands.push_back(result);                     //将结果放入
+            if( result != "除数不能为0" ){
+                operand = result;
+            }
+
             ui->display->setText(result);
         }
 
@@ -164,11 +173,82 @@ void MainWindow::on_btnDel_clicked()            //删除最右边的一个数字
 
 void MainWindow::on_btnClear_clicked()          //全部清除
 {
-    operand.clear();
+    operand.clear();                            //当前数字清除
+    opcode.clear();                             //当前操作符清除
     ui->display->setText(operand);
-    while( !operands.empty() ){
+    while( !operands.empty() ){                 //将存储的全部清除
         operands.pop();
     }
     ui->statusbar->showMessage(qobject_cast<QPushButton*>(sender())->text() + "  btn clicked");
 }
+
+void MainWindow::on_btnClearError_clicked()
+{
+    operand.clear();                            //当前数字清除
+    ui->display->setText(operand);
+    ui->statusbar->showMessage(qobject_cast<QPushButton*>(sender())->text() + "  btn clicked");
+}
+
+
+void MainWindow::on_btnSquare_clicked()         //将当前文本的数字进行平方
+{
+    if(operand != ""){
+        double number = operand.toDouble();
+        number = pow(number,2);
+        operand = QString::number(number);
+        ui->display->setText(operand);
+    }
+    ui->statusbar->showMessage(qobject_cast<QPushButton*>(sender())->text() + "  btn clicked");
+}
+
+
+void MainWindow::on_btnSqtr_clicked()           //对当前数进行开根号
+{
+    if(operand != ""){
+        double number = operand.toDouble();
+        number = sqrt(number);
+        operand = QString::number(number);
+        ui->display->setText(operand);
+    }
+    ui->statusbar->showMessage(qobject_cast<QPushButton*>(sender())->text() + "  btn clicked");
+}
+
+
+void MainWindow::on_btnInverse_clicked()        //对当前数进行倒数处理
+{
+    if(operand != ""){
+        double number = operand.toDouble();
+        number = 1.0/number;
+        operand = QString::number(number);
+        ui->display->setText(operand);
+    }
+    ui->statusbar->showMessage(qobject_cast<QPushButton*>(sender())->text() + "  btn clicked");
+}
+
+
+void MainWindow::on_btnPercentage_clicked()     //变成百分比数
+{
+    if(operand != ""){
+        double number = operand.toDouble();
+        number = number/100.0;
+        operand = QString::number(number);
+        ui->display->setText(operand);
+    }
+    ui->statusbar->showMessage(qobject_cast<QPushButton*>(sender())->text() + "  btn clicked");
+}
+
+
+void MainWindow::on_btnSign_clicked()
+{
+    if(operand != ""){
+        double number = operand.toDouble();
+        number = -number;
+        operand = QString::number(number);
+        ui->display->setText(operand);
+    }
+    ui->statusbar->showMessage(qobject_cast<QPushButton*>(sender())->text() + "  btn clicked");
+}
+
+
+
 

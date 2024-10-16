@@ -4,6 +4,10 @@
 #include <QMainWindow>
 #include <Qlabel>
 #include <Qstack>
+#include <QMap>
+#include <QPushButton>
+
+#include <QKeyEvent>
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -23,6 +27,11 @@ public:
 
     QString operand;            //数字存储
     QStack<QString> operands;
+    QMap<int,QPushButton*> digitBTNs;
+
+    QMap<int,QPushButton*> operators;
+
+    QString last_num;           //最后一个处理数，（不是被处理数）
 
     QString calculation();      //计算
 
@@ -50,6 +59,8 @@ private slots:
     void on_btnSign_clicked();
 
     void on_btnClearError_clicked();
+
+    virtual void keyPressEvent(QKeyEvent *event);
 
 private:
     Ui::MainWindow *ui;

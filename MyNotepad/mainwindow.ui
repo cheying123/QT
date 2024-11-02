@@ -49,11 +49,19 @@
      <string>文件(&amp;F)</string>
     </property>
     <addaction name="actionNew"/>
+    <addaction name="actionOpen"/>
+    <addaction name="actionSave"/>
+    <addaction name="actionSaveAs"/>
    </widget>
    <widget class="QMenu" name="menu_2">
     <property name="title">
      <string>编辑(&amp;E)</string>
     </property>
+    <addaction name="actionUndo"/>
+    <addaction name="actionRedo"/>
+    <addaction name="actionCut"/>
+    <addaction name="actionCopy"/>
+    <addaction name="actionPaste"/>
    </widget>
    <widget class="QMenu" name="menu_3">
     <property name="title">
@@ -62,10 +70,10 @@
     <addaction name="actionWrap"/>
     <addaction name="actionShowLineNumber"/>
     <addaction name="actionFont"/>
-    <addaction name="action_3"/>
+    <addaction name="actionFontColor"/>
     <addaction name="separator"/>
-    <addaction name="action_5"/>
-    <addaction name="action_6"/>
+    <addaction name="actionFontBackColar"/>
+    <addaction name="actionEditBackColor"/>
    </widget>
    <widget class="QMenu" name="menu_4">
     <property name="title">
@@ -73,6 +81,9 @@
     </property>
     <addaction name="actionToolbar"/>
     <addaction name="actionStatusbar"/>
+    <addaction name="separator"/>
+    <addaction name="actionFind"/>
+    <addaction name="actionReplace"/>
    </widget>
    <widget class="QMenu" name="menu_H">
     <property name="title">
@@ -343,6 +354,9 @@
    </property>
   </action>
   <action name="actionToolbar">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
    <property name="icon">
     <iconset resource="notepad.qrc">
      <normaloff>:/img/toolbar.png</normaloff>:/img/toolbar.png</iconset>
@@ -352,6 +366,9 @@
    </property>
   </action>
   <action name="actionWrap">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
    <property name="icon">
     <iconset resource="notepad.qrc">
      <normaloff>:/img/wrap.png</normaloff>:/img/wrap.png</iconset>
@@ -367,6 +384,9 @@
    </property>
   </action>
   <action name="actionStatusbar">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
    <property name="icon">
     <iconset resource="notepad.qrc">
      <normaloff>:/img/statusbar.png</normaloff>:/img/statusbar.png</iconset>
@@ -419,17 +439,17 @@
     <string>关于(&amp;A)</string>
    </property>
   </action>
-  <action name="action_3">
+  <action name="actionFontColor">
    <property name="text">
     <string>字体颜色</string>
    </property>
   </action>
-  <action name="action_5">
+  <action name="actionFontBackColar">
    <property name="text">
     <string>字体背景色</string>
    </property>
   </action>
-  <action name="action_6">
+  <action name="actionEditBackColor">
    <property name="text">
     <string>编辑器背景色</string>
    </property>

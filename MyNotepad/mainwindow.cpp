@@ -6,6 +6,8 @@
 #include <QFileDialog>
 #include <QMessageBox>
 #include <QTextStream>
+#include <QColorDialog>
+#include <QFontDialog>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -27,6 +29,26 @@ MainWindow::MainWindow(QWidget *parent)
     author->setText(tr("黄文轩"));
     ui->statusbar->addPermanentWidget(author);
 
+    ui->actionUndo->setEnabled(false);
+    ui->actionRedo->setEnabled(false);
+    ui->actionCut->setEnabled(false);
+    ui->actionCopy->setEnabled(false);
+    ui->actionPaste->setEnabled(false);
+
+//---------------------------------------------------------------------------------
+//这一段代码的目的是初始化换行，否则要点击两次才能正常
+    QPlainTextEdit::LineWrapMode mode = ui->plainTextEdit->lineWrapMode();
+
+    if( mode == QTextEdit::NoWrap ){
+        ui->plainTextEdit->setLineWrapMode(QPlainTextEdit::WidgetWidth);
+
+        ui->actionWrap->setChecked(true);
+    }else{
+        ui->plainTextEdit->setLineWrapMode(QPlainTextEdit::NoWrap);
+
+        ui->actionWrap->setChecked(false);
+    }
+//-----------------------------------------------------------------------------------
 }
 
 MainWindow::~MainWindow()
@@ -188,5 +210,108 @@ bool MainWindow::userEditConfirmed()
         }
     }
     return true;
+}
+
+
+void MainWindow::on_actionUndo_triggered()
+{
+    ui->plainTextEdit->undo();
+}
+
+
+void MainWindow::on_actionCut_triggered()
+{
+    ui->plainTextEdit->cut();
+    ui->actionPaste->setEnabled(true);
+}
+
+
+void MainWindow::on_actionCopy_triggered()
+{
+    ui->plainTextEdit->copy();
+    ui->actionPaste->setEnabled(true);
+}
+
+void MainWindow::on_actionPaste_triggered()
+{
+    ui->plainTextEdit->paste();
+}
+
+void MainWindow::on_actionRedo_triggered()
+{
+    ui->plainTextEdit->redo();
+}
+
+
+//可行性判断
+void MainWindow::on_plainTextEdit_undoAvailable(bool b)
+{
+    ui->actionUndo->setEnabled(b);
+}
+
+
+void MainWindow::on_plainTextEdit_copyAvailable(bool b)
+{
+    ui->actionCopy->setEnabled(b);
+    ui->actionCut->setEnabled(b);
+
+
+}
+
+
+void MainWindow::on_plainTextEdit_redoAvailable(bool b)
+{
+    ui->actionRedo->setEnabled(b);
+}
+
+
+void MainWindow::on_actionFontColor_triggered()    //字体颜色
+{
+    QColor color = QColorDialog::getColor(Qt::black,this,"选择颜色");   //初始化颜色
+    if(color.isValid()){
+        ui->plainTextEdit->setStyleSheet(QString("QPlainTextEdit {color:%1}").arg(color.name()));
+    }
+}
+
+
+void MainWindow::on_actionFontBackColar_triggered() //字体背景色
+{
+    QColor color = QColorDialog::getColor(Qt::black,this,"选择颜色");   //初始化颜色
+    if(color.isValid()){
+        ui->plainTextEdit->setStyleSheet(QString("QPlainTextEdit {background-color:%1}").arg(color.name()));
+    }
+}
+
+
+void MainWindow::on_actionEditBackColor_triggered()
+{
+
+}
+
+
+void MainWindow::on_actionWrap_triggered()  //自动换行
+{
+    QPlainTextEdit::LineWrapMode mode = ui->plainTextEdit->lineWrapMode();
+
+    if( mode == QTextEdit::NoWrap ){
+        ui->plainTextEdit->setLineWrapMode(QPlainTextEdit::WidgetWidth);
+
+        ui->actionWrap->setChecked(true);
+    }else{
+        ui->plainTextEdit->setLineWrapMode(QPlainTextEdit::NoWrap);
+
+        ui->actionWrap->setChecked(false);
+    }
+}
+
+
+void MainWindow::on_actionFont_triggered()
+{
+    bool ok = false;
+    QFont font = QFontDialog::getFont(&ok,this);
+
+    if( ok ){
+        ui->plainTextEdit->setFont(font);
+    }
 }
 

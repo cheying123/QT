@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>395</width>
-    <height>139</height>
+    <width>402</width>
+    <height>179</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -38,7 +38,7 @@
      <item row="2" column="0">
       <layout class="QHBoxLayout" name="horizontalLayout_3">
        <item>
-        <widget class="QCheckBox" name="checkBox">
+        <widget class="QCheckBox" name="cbCaseSensetive">
          <property name="text">
           <string>区分大小写</string>
          </property>
@@ -51,14 +51,14 @@
          </property>
          <layout class="QHBoxLayout" name="horizontalLayout">
           <item>
-           <widget class="QRadioButton" name="rbDown">
+           <widget class="QRadioButton" name="rbUp">
             <property name="text">
              <string>向上(U)</string>
             </property>
            </widget>
           </item>
           <item>
-           <widget class="QRadioButton" name="rbUp">
+           <widget class="QRadioButton" name="rbDown">
             <property name="text">
              <string>向下(U)</string>
             </property>
@@ -122,14 +122,14 @@
       </widget>
      </item>
      <item>
-      <widget class="QPushButton" name="pushButton">
+      <widget class="QPushButton" name="takeplace">
        <property name="text">
         <string>替换(&amp;R)</string>
        </property>
       </widget>
      </item>
      <item>
-      <widget class="QPushButton" name="pushButton_2">
+      <widget class="QPushButton" name="takeallplace">
        <property name="text">
         <string>全部替换(&amp;A)</string>
        </property>

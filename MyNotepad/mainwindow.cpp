@@ -49,6 +49,10 @@ MainWindow::MainWindow(QWidget *parent)
         ui->actionWrap->setChecked(false);
     }
 //-----------------------------------------------------------------------------------
+
+    ui->actionToolbar->setChecked(true);
+    ui->actionStatusbar->setChecked(true);
+
 }
 
 MainWindow::~MainWindow()
@@ -65,14 +69,14 @@ void MainWindow::on_actionAbout_triggered()
 
 void MainWindow::on_actionFind_triggered()
 {
-    SearchDialog dlg;
+    SearchDialog dlg(this,ui->plainTextEdit);
     dlg.exec();
 }
 
 
 void MainWindow::on_actionReplace_triggered()
 {
-    ReplaceDialog dlg;
+    ReplaceDialog dlg(this,ui->plainTextEdit);
     dlg.exec();
 }
 
@@ -135,7 +139,7 @@ void MainWindow::on_actionSave_triggered()
     QFile file(file_path);          //打开文件路径的文件，在读取文件时就已经将路径导入
 
     if( !file.open(QFile::WriteOnly | QFile::Text) ){
-        QMessageBox::warning(this,"警告","打开文件失败,无法保存");
+        QMessageBox::warning(this,"警告","文件保存失败");
         return;
     }
 
@@ -189,7 +193,7 @@ void MainWindow::on_plainTextEdit_textChanged()
 bool MainWindow::userEditConfirmed()
 {
     if( textchange ){
-        QString path = file_path != "" ? file_path : "无标题.txt";
+        QString path = file_path != "" ? file_path : "新建文本文件.txt";
 
         QMessageBox msg(this);
         msg.setIcon(QMessageBox::Question);
@@ -200,7 +204,7 @@ bool MainWindow::userEditConfirmed()
         int r = msg.exec();
         switch(r){
         case QMessageBox::Yes:
-            on_actionSave_triggered();
+            on_actionSave_triggered();                  //是的话会跳转到保存界面
             break;
         case QMessageBox::No:
             textchange = false;
@@ -244,7 +248,7 @@ void MainWindow::on_actionRedo_triggered()
 
 
 //可行性判断
-void MainWindow::on_plainTextEdit_undoAvailable(bool b)
+void MainWindow::on_plainTextEdit_undoAvailable(bool b)     //能撤销就将撤销显示，（下面以此类推）
 {
     ui->actionUndo->setEnabled(b);
 }
@@ -254,8 +258,6 @@ void MainWindow::on_plainTextEdit_copyAvailable(bool b)
 {
     ui->actionCopy->setEnabled(b);
     ui->actionCut->setEnabled(b);
-
-
 }
 
 
@@ -312,6 +314,36 @@ void MainWindow::on_actionFont_triggered()
 
     if( ok ){
         ui->plainTextEdit->setFont(font);
+    }
+}
+
+
+void MainWindow::on_actionToolbar_triggered()       //工具栏
+{
+    bool visible = ui->toolBar->isVisible();
+    ui->toolBar->setVisible(!visible);
+    ui->actionToolbar->setChecked(!visible);
+}
+
+
+void MainWindow::on_actionStatusbar_triggered()     //状态栏
+{
+    bool visible = ui->statusbar->isVisible();
+    ui->statusbar->setVisible(!visible);
+    ui->actionStatusbar->setChecked(!visible);
+}
+
+
+void MainWindow::on_actionSelectAll_triggered()
+{
+    ui->plainTextEdit->selectAll();
+}
+
+
+void MainWindow::on_actionExit_triggered()
+{
+    if( userEditConfirmed() ){
+        exit(0);
     }
 }
 

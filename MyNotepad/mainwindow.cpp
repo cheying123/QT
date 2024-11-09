@@ -18,11 +18,11 @@ MainWindow::MainWindow(QWidget *parent)
     textchange = false;             //初始化，判断是否改变
 
     statusLabel.setMaximumWidth(150);
-    statusLabel.setText("长度:" + QString::number(0) + "    行号: " + QString::number(1));
+    statusLabel.setText("长度:" + QString::number(0) + "    行号: " + QString::number(1));          //文本长度
     ui->statusbar->addPermanentWidget(&statusLabel);
 
     statusCursorLabel.setMaximumWidth(150);
-    statusCursorLabel.setText("行:" + QString::number(0) + "    列: " + QString::number(1));
+    statusCursorLabel.setText("行:" + QString::number(1) + "    列: " + QString::number(1));        //设置光标位置
     ui->statusbar->addPermanentWidget(&statusCursorLabel);
 
     QLabel *author = new QLabel(ui->statusbar);
@@ -52,6 +52,11 @@ MainWindow::MainWindow(QWidget *parent)
 
     ui->actionToolbar->setChecked(true);
     ui->actionStatusbar->setChecked(true);
+
+    ui->actionShowLineNumber->setChecked(false);
+    on_actionShowLineNumber_triggered(false);
+    connect(ui->actionShowLineNumber,SIGNAL(triggered(bool)),
+            ui->plainTextEdit,SLOT(hideLineNumberArea(bool)));
 
 }
 
@@ -182,12 +187,14 @@ void MainWindow::on_actionSaveAs_triggered()
 }
 
 
-void MainWindow::on_plainTextEdit_textChanged()
+void MainWindow::on_plainTextEdit_textChanged()             //文本栏状态改变
 {
     if( !textchange ){
         this->setWindowTitle("*" + this->windowTitle() );
         textchange = true;
     }
+    statusLabel.setText("总长度:" + QString::number(ui->plainTextEdit->toPlainText().length()) +
+                        "    总行号: " + QString::number(ui->plainTextEdit->document()->lineCount()));          //设置文本信息
 }
 
 bool MainWindow::userEditConfirmed()
@@ -345,5 +352,33 @@ void MainWindow::on_actionExit_triggered()
     if( userEditConfirmed() ){
         exit(0);
     }
+}
+
+
+void MainWindow::on_plainTextEdit_cursorPositionChanged()           //光标位置显示
+{
+    int pos = ui->plainTextEdit->textCursor().position();           //光标位置(处于的字符串位置)
+    int ln = 0;
+    int fla = -1;
+    QString text = ui->plainTextEdit->toPlainText();
+
+    for(int i=0;i<pos;i++){                 //找行数和当前行开头对应的是第几个字符串
+        if( text[i] == '\n' ){
+            ln += 1;
+            fla = i;
+        }
+    }
+    fla += 1;                               //由于最后是匹配'\n',所以要+1
+    int col = pos - fla;
+    statusCursorLabel.setText("行:" + QString::number(ln) +
+                              "    列: " + QString::number(col + 1));        //设置光标位置
+
+
+}
+
+
+void MainWindow::on_actionShowLineNumber_triggered(bool checked)
+{
+    ui->plainTextEdit->hideLineNumberArea(!checked);
 }
 

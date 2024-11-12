@@ -48,7 +48,7 @@ void CodeEditor::updateLineNumberArea(const QRect &rect, int dy)
 
 void CodeEditor::hideLineNumberArea(bool flag)
 {
-    if(flag){
+    if(!flag){
         lineNumberArea->hide();
         setViewportMargins(0, 0, 0, 0);
     }else{

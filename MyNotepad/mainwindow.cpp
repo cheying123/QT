@@ -53,8 +53,8 @@ MainWindow::MainWindow(QWidget *parent)
     ui->actionToolbar->setChecked(true);
     ui->actionStatusbar->setChecked(true);
 
-    ui->actionShowLineNumber->setChecked(false);
-    on_actionShowLineNumber_triggered(false);
+    ui->actionShowLineNumber->setChecked(true);
+
     connect(ui->actionShowLineNumber,SIGNAL(triggered(bool)),
             ui->plainTextEdit,SLOT(hideLineNumberArea(bool)));
 

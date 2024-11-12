@@ -71,7 +71,11 @@ private slots:
 
     void on_plainTextEdit_cursorPositionChanged();
 
-    // void on_actionShowLineNumber_triggered(bool checked);
+
+
+    //void on_actionShowLineNumber_triggered();
+
+    void on_actionShowLineNumber_triggered(bool checked);
 
 private:
     Ui::MainWindow *ui;
